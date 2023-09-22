@@ -151,9 +151,71 @@ function App() {
 
   const [count, increase, decrease] = useMyHook(0)
 
+
+
+  function myFn() {
+    return true
+  }
+
+  const myFnOne = () => {
+    return true
+  }
+
+  const myFnTwo = () => myFn()
+
+
+
+  const MyAnotherComponent = () => {
+
+    const [count, setCount] = useState(0)
+    const [todos, setTodos] = useState([])
+
+
+    const fetchTodos = () => {
+      //will fetch todos here
+    }
+
+
+    //When component is mounted
+    useEffect(() => {
+      console.log("Component Did Mount")
+
+      fetchTodos()
+    }, [])
+
+
+    //When component is updated
+    useEffect(() => {
+      console.log("Component Did Update")
+    }, [todos])
+
+    // When component is unmounted
+    useEffect(() => {
+
+    }, [])
+
+
+    //into a single useEffect
+    useEffect(() => {
+      console.log("Component Did Mount")
+
+      fetchTodos()
+
+      return () => {
+        console.log("Component Will Unmount")
+      }
+    }, [todos])
+
+
+
+
+
+  }
+
   return (
     <div className="App">
       <h1>Learning React</h1>
+      <button onClick={() => myFn()}>SOMETHING</button>
       {/* <h1>Pure Component</h1>
       <PureComponentExample data="pure-component-example-data" />
       <br />
