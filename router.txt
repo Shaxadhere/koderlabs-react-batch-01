@@ -1,0 +1,23 @@
+Reference URL: https://reactrouter.com/en/main/routers/create-browser-router
+
+Step 1
+run npm install react-router-dom
+
+
+Step 2
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <div>Hello world!</div>,
+  },
+]);
+
+const AppRouter = () => <RouterProvider router={router} />
+
+export default AppRouter
