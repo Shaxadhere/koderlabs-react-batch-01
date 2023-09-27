@@ -97,18 +97,68 @@ const Home = () => {
         fetch("http://localhost:3000/objects.json")
             .then((response) => response.json())
             .then((data) => {
-                alert(data?.message)
+                // alert(data?.message)
                 setMovies(data?.results)
             })
     }, [])
+
+    const [user, setUser] = useState({})
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+
+
+    const sendData = () => {
+        fetch("https://evolvlmsdev.azurewebsites.net/api/authorize", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Email: email,
+                Password: password
+            })
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success === true) {
+                    console.log(data?.data?.user)
+                    setUser(data?.data?.user)
+                }
+                else {
+                    alert(data.apiMessage)
+                }
+            })
+    }
 
 
 
     return (
         <div>
-            <h1>Home</h1>
+            <h1>Welcom Home {user?.name}</h1>
             {/* <button onClick={throwError}>Throw some error</button> */}
             <button onClick={() => navigate("/about")}>Take me to about</button>
+
+            {JSON.stringify(user)}
+
+            <div>
+                <input type='text'
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <br />
+
+                <input type='password'
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+
+                <br />
+
+                <button onClick={sendData}>Login</button>
+            </div>
 
 
             <div style={{ display: "flex", flexWrap: "wrap", marginTop: 50 }}>
